@@ -9,6 +9,13 @@ Each folder demonstrates another design pattern.
 Some folders contain before and after folders. In the before folder we can see the code before
 applying the pattern and in the after folder we can see the refactored code.
 
+## Suggested sequence of working with the examples
+
+* Adapter
+* Strategy
+* Factory Method
+* Abstract Factory
+* Singleton
 
 ## Exercises
 

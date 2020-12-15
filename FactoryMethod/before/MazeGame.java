@@ -11,7 +11,7 @@ public class MazeGame {
 	}
 
 	public Maze createMaze() {
-		Maze maze = new Maze();
+		maze = new Maze();
 
 		Room r1 = new Room(1);
 		Room r2 = new Room(2);

@@ -2,7 +2,7 @@ public class MazeGame {
 	private Character character = new Character();
 	private Maze maze;
 
-	public MazeGame(MazeFactory factory) {
+	public MazeGame(MazeFactoryI factory) {
 		maze = createMaze(factory);
 	}
 
@@ -10,8 +10,8 @@ public class MazeGame {
 		character.move(direction);
 	}
 
-	public Maze createMaze(MazeFactory factory) {
-		Maze maze = factory.makeMaze();
+	public Maze createMaze(MazeFactoryI factory) {
+		maze = factory.makeMaze();
 
 		Room r1 = factory.makeRoom(1);
 		Room r2 = factory.makeRoom(2);
@@ -37,6 +37,8 @@ public class MazeGame {
 	}
 
 	public static void main(String arg[]) {
+		// changing the Facory changes the constructed objects
+		
 		// MazeGame game = new MazeGame (new MazeFactory()) ;
 		MazeGame game = new MazeGame(new MagicMazeFactory());
 

@@ -1,4 +1,4 @@
-public class MazeFactory {
+public class MazeFactory implements MazeFactoryI {
 	// FACTORY METHODS with default implementations
 	public Maze makeMaze() {
 		return new Maze();

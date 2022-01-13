@@ -16,6 +16,7 @@ applying the pattern and in the after folder we can see the refactored code.
 * Factory Method
 * Abstract Factory
 * Singleton
+* Observer
 
 ## Exercises
 

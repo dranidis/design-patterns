@@ -11,14 +11,14 @@ applying the pattern and in the after folder we can see the refactored code.
 
 ## Suggested sequence of working with the examples
 
-* Adapter
-* Strategy
-* Factory Method
-* Abstract Factory
-* Singleton
-* Observer
+- Adapter
+- Strategy
+- Factory Method
+- Abstract Factory
+- Singleton
+- Observer
+- Mediator
 
 ## Exercises
 
-In some patterns there is also a docs folder with some more info about the pattern and exercises for practice. 
-
+In some patterns there is also a docs folder with some more info about the pattern and exercises for practice.

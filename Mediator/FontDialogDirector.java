@@ -83,7 +83,10 @@ public class FontDialogDirector extends JDialog implements DialogDirector {
     public void widgetChanged(Widget widget) {
         if (widget == fontList) {
             font = fontList.getSelection();
-            ok.enable();
+            if (font != null)
+                ok.enable();
+            else
+                ok.disable();
         } else if (widget == ok) {
             this.dispose();
         } else if (widget == cancel) {

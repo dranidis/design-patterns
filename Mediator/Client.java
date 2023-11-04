@@ -15,7 +15,6 @@ public class Client {
                 String font = fontDialog.getFontFromDialog();
 
                 System.out.println("\nSelected font: " + font);
-
             }
         });
     }

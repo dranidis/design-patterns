@@ -1,24 +1,39 @@
+import java.util.List;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 public class ListBox implements Widget {
 
     private DialogDirector director;
 
-    private String selection;
+    JList<String> jList;
 
-    public ListBox(DialogDirector director) {
+    ListBox(DialogDirector director, List<String> strings) {
         this.director = director;
+
+        DefaultListModel<String> model = new DefaultListModel<String>();
+        for (String string : strings) {
+            model.addElement(string);
+        }
+
+        jList = new JList<String>(model);
+
+        jList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent evt) {
+                changed();
+            }
+        });
     }
 
-    public void setDirector(DialogDirector director) {
-        this.director = director;
-    }
-
-    public void setSelection(String selection) {
-        this.selection = selection;
-        this.changed();
+    public JList<String> getJList() {
+        return jList;
     }
 
     public String getSelection() {
-        return selection;
+        return jList.getSelectedValue();
     }
 
     @Override

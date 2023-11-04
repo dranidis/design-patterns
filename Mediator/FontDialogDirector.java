@@ -1,3 +1,13 @@
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 /**
  * The director is responsible for managing the widgets and their state. The
  * director needs to know all the widgets that it manages.
@@ -6,7 +16,9 @@
  * Alternatively, the widgets could be created by the client and passed to the
  * director using a setter method for each widget.
  */
-public class FontDialogDirector implements DialogDirector {
+public class FontDialogDirector extends JDialog implements DialogDirector {
+
+    JFrame frame;
 
     private ListBox fontList;
     private EntryField fontName;
@@ -15,8 +27,27 @@ public class FontDialogDirector implements DialogDirector {
 
     private String font;
 
-    public FontDialogDirector() {
+    public FontDialogDirector(Frame parent) {
+        super(parent, "Font Selector", true);
+
         this.createWidgets();
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        panel.add(fontName.getJTextField(), BorderLayout.NORTH);
+
+        panel.add(fontList.getJList(), BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.add(cancel.getJButton());
+        buttonPanel.add(ok.getJButton());
+
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        getContentPane().add(panel);
+        pack();
     }
 
     /**
@@ -24,63 +55,41 @@ public class FontDialogDirector implements DialogDirector {
      * director manages.
      */
     private void createWidgets() {
-        fontList = new ListBox(this);
+        List<String> fonts = new ArrayList<>();
+        fonts.add("Arial");
+        fonts.add("Times New Roman");
+        fonts.add("Verdana");
+
+        fontList = new ListBox(this, fonts);
+
         fontName = new EntryField(this);
-        ok = new Button(this);
-        cancel = new Button(this);
+
+        ok = new Button(this, "OK");
+        cancel = new Button(this, "Cancel");
+
+        ok.disable();
+        cancel.enable();
     }
 
-    public void show() {
-        System.out.println("FontDialog is shown");
-    }
-
-    public void dismiss() {
-        System.out.println("FontDialog is dismissed");
+    public String getFontFromDialog() {
+        setLocationRelativeTo(getParent());
+        setVisible(true);
+        return this.font;
     }
 
     @Override
     public void widgetChanged(Widget widget) {
         if (widget == fontList) {
             fontName.setText(fontList.getSelection());
+            ok.enable();
         } else if (widget == ok) {
             // apply font change and dismiss dialog
             font = fontName.getText();
-            this.dismiss();
+            this.dispose();
         } else if (widget == cancel) {
             // dismiss dialog
-            this.dismiss();
+            this.dispose();
         }
-    }
-
-    /**
-     * This method is called by the client to get the font selected by the user.
-     * 
-     * @return
-     */
-    public String getFont() {
-        return font;
-    }
-
-    // The following methods exist ONLY to simulate in a test scenario
-    // the user interaction with the widgets.
-    //
-    // Normally these methods would be called by the widgets themselves
-    // when the user interacts with the GUI.
-
-    public void fontListSelect(String font) {
-        System.out.println("User selects from the list: " + font);
-        fontList.setSelection(font);
-        // fontName.setText(fontList.getSelection());
-    }
-
-    public void okButtonPress() {
-        System.out.println("User presses OK");
-        ok.changed();
-    }
-
-    public void cancelButtonPress() {
-        System.out.println("User presses Cancel");
-        cancel.changed();
     }
 
 }

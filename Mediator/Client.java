@@ -1,17 +1,23 @@
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 public class Client {
     public static void main(String[] args) {
-        FontDialogDirector fontDialog = new FontDialogDirector();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
 
-        fontDialog.show();
+                JFrame frame = new JFrame();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // simulate user interaction with the widgets
+                FontDialogDirector fontDialog = new FontDialogDirector(frame);
 
-        fontDialog.fontListSelect("Arial");
-        fontDialog.okButtonPress();
+                String font = fontDialog.getFontFromDialog();
 
-        // get the font selected by the user
-        System.out
-                .println(null == fontDialog.getFont() ? "No font selected" : "Font selected: " + fontDialog.getFont());
+                System.out.println("\nSelected font: " + font);
+
+            }
+        });
     }
 
 }

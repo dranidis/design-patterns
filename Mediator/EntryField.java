@@ -1,6 +1,6 @@
 import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class EntryField implements Widget {
 
@@ -11,17 +11,24 @@ public class EntryField implements Widget {
     public EntryField(DialogDirector director) {
         this.director = director;
 
-        textField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        DocumentListener documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
                 changed();
             }
-        });
 
-    }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                changed();
+            }
 
-    public void setText(String text) {
-        textField.setText(text);
-        this.changed();
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                changed();
+            }
+        };
+        textField.getDocument().addDocumentListener(documentListener);
+
     }
 
     public String getText() {

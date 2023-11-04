@@ -9,17 +9,21 @@ public class ListBox implements Widget {
 
     private DialogDirector director;
 
+    List<String> allChoices;
+
     JList<String> jList;
+    DefaultListModel<String> model;
 
-    ListBox(DialogDirector director, List<String> strings) {
+    ListBox(DialogDirector director, List<String> allChoices) {
         this.director = director;
+        this.allChoices = allChoices;
 
-        DefaultListModel<String> model = new DefaultListModel<String>();
-        for (String string : strings) {
+        model = new DefaultListModel<>();
+        for (String string : allChoices) {
             model.addElement(string);
         }
 
-        jList = new JList<String>(model);
+        jList = new JList<>(model);
 
         jList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent evt) {
@@ -39,6 +43,19 @@ public class ListBox implements Widget {
     @Override
     public void changed() {
         director.widgetChanged(this);
+    }
+
+    /**
+     * This method is called by the director to update the state of the widget. The
+     * list model is updated so that it holds only the strings matching the given
+     * text.
+     */
+    public void filterFonts(String text) {
+        model.clear();
+        for (String string : allChoices) {
+            if (string.toUpperCase().contains(text.toUpperCase()))
+                model.addElement(string);
+        }
     }
 
 }

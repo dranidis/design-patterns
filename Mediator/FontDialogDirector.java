@@ -57,6 +57,8 @@ public class FontDialogDirector extends JDialog implements DialogDirector {
     private void createWidgets() {
         List<String> fonts = new ArrayList<>();
         fonts.add("Arial");
+        fonts.add("Arial Black");
+        fonts.add("Courier New");
         fonts.add("Times New Roman");
         fonts.add("Verdana");
 
@@ -80,15 +82,15 @@ public class FontDialogDirector extends JDialog implements DialogDirector {
     @Override
     public void widgetChanged(Widget widget) {
         if (widget == fontList) {
-            fontName.setText(fontList.getSelection());
+            font = fontList.getSelection();
             ok.enable();
         } else if (widget == ok) {
-            // apply font change and dismiss dialog
-            font = fontName.getText();
             this.dispose();
         } else if (widget == cancel) {
-            // dismiss dialog
+            font = null;
             this.dispose();
+        } else if (widget == fontName) {
+            fontList.filterFonts(fontName.getText());
         }
     }
 

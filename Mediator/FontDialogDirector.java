@@ -21,7 +21,7 @@ public class FontDialogDirector extends JDialog implements DialogDirector {
     JFrame frame;
 
     private ListBox fontList;
-    private EntryField fontName;
+    private EntryField filterFontsField;
     private Button ok;
     private Button cancel;
 
@@ -35,7 +35,7 @@ public class FontDialogDirector extends JDialog implements DialogDirector {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        panel.add(fontName.getJTextField(), BorderLayout.NORTH);
+        panel.add(filterFontsField.getJTextField(), BorderLayout.NORTH);
 
         panel.add(fontList.getJList(), BorderLayout.CENTER);
 
@@ -64,7 +64,7 @@ public class FontDialogDirector extends JDialog implements DialogDirector {
 
         fontList = new ListBox(this, fonts);
 
-        fontName = new EntryField(this);
+        filterFontsField = new EntryField(this);
 
         ok = new Button(this, "OK");
         cancel = new Button(this, "Cancel");
@@ -81,6 +81,8 @@ public class FontDialogDirector extends JDialog implements DialogDirector {
 
     @Override
     public void widgetChanged(Widget widget) {
+        System.out.println("widgetChanged: " + widget);
+
         if (widget == fontList) {
             font = fontList.getSelection();
             if (font != null)
@@ -92,8 +94,8 @@ public class FontDialogDirector extends JDialog implements DialogDirector {
         } else if (widget == cancel) {
             font = null;
             this.dispose();
-        } else if (widget == fontName) {
-            fontList.filterFonts(fontName.getText());
+        } else if (widget == filterFontsField) {
+            fontList.filterFonts(filterFontsField.getText());
         }
     }
 

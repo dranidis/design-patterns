@@ -13,6 +13,7 @@ public class ListBox implements Widget {
 
     JList<String> jList;
     DefaultListModel<String> model;
+    String lastValue;
 
     ListBox(DialogDirector director, List<String> allChoices) {
         this.director = director;
@@ -27,9 +28,17 @@ public class ListBox implements Widget {
 
         jList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent evt) {
-                changed();
+                String selectedValue = jList.getSelectedValue();
+                if (!areSameStrings(selectedValue, lastValue)) {
+                    lastValue = jList.getSelectedValue();
+                    changed();
+                }
             }
         });
+    }
+
+    protected boolean areSameStrings(String string1, String string2) {
+        return (string1 == null && string2 == null) || (string1 != null && string1.equals(string2));
     }
 
     public JList<String> getJList() {

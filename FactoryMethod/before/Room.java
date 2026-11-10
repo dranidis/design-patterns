@@ -19,6 +19,7 @@ public class Room implements MapSite {
 		return sides[direction];
 	}
 
+	@Override
 	public void enter(Character c) {
 		c.setCurrentRoom(this);
 		System.out.println("You entered room " + roomNumber);
